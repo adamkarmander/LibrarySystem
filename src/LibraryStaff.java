@@ -14,20 +14,20 @@ public class LibraryStaff {
     public static Command parseCommand(String userInput) {
         String commandString = userInput.split(" ")[0];
         switch (commandString) {
-        case "list":
-            return Command.LIST;
-        case "checkout":
-            return Command.CHECKOUT;
-        case "checkin":
-            return Command.CHECKIN;
-        case "register":
-            return Command.REGISTER;
-        case "deregister":
-            return Command.DEREGISTER;
-        case "info":
-            return Command.INFO;
-        case "quit":
-            return Command.QUIT;
+	        case "list":
+	            return Command.LIST;
+	        case "checkout":
+	            return Command.CHECKOUT;
+	        case "checkin":
+	            return Command.CHECKIN;
+	        case "register":
+	            return Command.REGISTER;
+	        case "deregister":
+	            return Command.DEREGISTER;
+	        case "info":
+	            return Command.INFO;
+	        case "quit":
+	            return Command.QUIT;
         }
     }
     
