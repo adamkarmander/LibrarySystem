@@ -8,7 +8,8 @@ public class LibraryStaff {
         REGISTER,
         DEREGISTER,
         INFO,
-        QUIT
+        QUIT,
+        UNKNOWN
     }
     
     public static Command parseCommand(String userInput) {
@@ -28,6 +29,8 @@ public class LibraryStaff {
 	            return Command.INFO;
 	        case "quit":
 	            return Command.QUIT;
+	        default:
+	        	return Command.UNKNOWN;
         }
     }
     
@@ -64,7 +67,10 @@ public class LibraryStaff {
 		        System.out.println("The queue is now closed!");
 		        scanner.close();
 		        System.exit(0);
-		    } 
+		    } else if(command == Command.UNKNOWN) {
+		    	System.out.println("Unknown command. Try again.");
+		    	continue;
+		    }
     	}
     }
 }
