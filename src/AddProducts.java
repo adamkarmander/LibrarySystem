@@ -1,8 +1,8 @@
 
 public interface AddProducts {
 
-	void addProducts(Products products) {
-		
-		
-	}
+	void addMovie(Products movie);
+
+	void addBook(Products book);
+
 }
