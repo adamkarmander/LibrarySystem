@@ -34,13 +34,9 @@ public class LibraryStaff {
         }
     }
     
-    public static String[] parseArguments(String userInput) {
-        String[] commandPlusArguments = userInput.split(" ");
-        String[] arguments = new String[commandPlusArguments.length - 1];
-        for (int i = 1; i < commandPlusArguments.length; i++) {
-            arguments[i - 1] = commandPlusArguments[i];
-        }
-        return arguments;
+    public static String parseArgument(String userInput) {
+        String argument = userInput.split(" ")[1];
+        return argument;
     }
 
     public static void main(String[] args) {
@@ -48,7 +44,10 @@ public class LibraryStaff {
     	while (true) {
 		    String userInput = scanner.nextLine();
 		    Command command = parseCommand(userInput);
-		    String[] arguments = parseArguments(userInput);
+		    if(userInput.contains(" ")) {
+		    	String argument = parseArgument(userInput);
+		    }
+		    
 		    if (command == Command.LIST) {
 		        
 		    } else if (command == Command.CHECKOUT) {
@@ -64,7 +63,7 @@ public class LibraryStaff {
 		    } else if (command == Command.LIST) {
 		    	
 		    } else if (command == Command.QUIT) {
-		        System.out.println("The queue is now closed!");
+		        System.out.println("Goodbye!");
 		        scanner.close();
 		        System.exit(0);
 		    } else if(command == Command.UNKNOWN) {
