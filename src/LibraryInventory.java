@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.LinkedList;
 
-public class LibraryInventory<E> implements AddProducts<E> {
+public class LibraryInventory<E extends AddProducts> {
 
 	private List<E> inventory;
 	private String productPath; // Lagrar sökväg till csv-filen
