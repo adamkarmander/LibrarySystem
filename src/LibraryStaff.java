@@ -49,19 +49,57 @@ public class LibraryStaff {
 		    }
 		    
 		    if (command == Command.LIST) {
-		        
+		    	//Prints out article numbers, titles and inventory status for each registered product.
+		    	//Prints out the names and phone numbers of customers that have borrowed a product.
 		    } else if (command == Command.CHECKOUT) {
+		    	//If someone has borrowed the product
+		    		System.out.println("Cannot lend (product name) to another customer. It is already borrowed by (customer name)");
+		        //else
+			    	System.out.println("Enter customer name:");
+			        scanner.nextLine(); //TEMPORARY
+			        System.out.println("Enter customer phone number:");
+			        scanner.nextLine(); //TEMPORARY
+			        System.out.println("Successfully lended (product name) to (customer name)");
 		        
 		    } else if (command == Command.CHECKIN) {
-		        
+		    	//If someone has borrowed the product
+		    		System.out.println("Successfully returned (product name) from (customer name)");
+		    	//else
+		    		System.out.println("Cannot return (product name). It is not borrowed by any customer.");
 		    } else if (command == Command.REGISTER) {
+		    	System.out.println("What are you registering? Book (b), Movie (m)");
+		    	scanner.nextLine(); //TEMPORARY
+		    	System.out.println("Enter product ID:");
+		    	scanner.nextLine(); //TEMPORARY
+		    	System.out.println("Enter title:");
+		    	scanner.nextLine(); //TEMPORARY
+		    	System.out.println("Enter value:");
+		    	scanner.nextLine(); //TEMPORARY
 		    	
+		    	//If it's a Book
+		    		System.out.println("Enter number of pages:");
+		    		scanner.nextLine(); //TEMPORARY
+		    		System.out.println("Enter publisher:");
+		    		scanner.nextLine(); //TEMPORARY
+		    	//else if it's a Movie
+		    		System.out.println("Enter length:");
+		    		scanner.nextLine(); //TEMPORARY
+		    		System.out.println("Enter rating:");
+		    		scanner.nextLine(); //TEMPORARY
+		    	
+		    	//If it's not already registered
+		    		System.out.println("Successfully registered (product name)!");
+		    	//else 
+		    		System.out.println("Error: Product with ID (product ID) is already registered.");
 		    } else if (command == Command.DEREGISTER) {
-		    	
+		    	System.out.println("Successfully deregistered (product name)");
 		    } else if (command == Command.INFO) {
-		    	
-		    } else if (command == Command.LIST) {
-		    	
+		    	//If the product is a registered Book
+		    		System.out.println("(product type) (product name): Value (product value)kr, Number of pages: (book pages), Publisher (book author)");
+		    	//else if it's a registered Movie
+		    		System.out.println("(product type) (product name): Value (product value)kr, Length (movie length), Rating (movie rating)");
+		    	//else 
+		    		System.out.println("Error: No product with id (product id) registered.");	
 		    } else if (command == Command.QUIT) {
 		        System.out.println("Goodbye!");
 		        scanner.close();
