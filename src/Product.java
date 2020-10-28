@@ -23,11 +23,11 @@ public class Product {
 		return productName;
 	}
 
-	public String productCsvRec() {
+	public String productCsvRec() { // Hur få in denna metod i book och movie?
 		return String.format("%d, %s,%s", articleNumber, productType, productName);
-	}
+	} // Vilken regex för int?
 
-	public static String getProductHeader() {// Vad gör metoden?
+	public static String getProductHeader() {// Vill ha header?
 		return "articlenumber, type, name";
 	}
 
