@@ -1,25 +1,10 @@
-<<<<<<< Updated upstream
-import java.util.LinkedList;
 
-public class LibraryInventory implements AddProducts<Product> {
-	LinkedList<Product> list = new LinkedList<Product>();
-	
-	public LibraryInventory(String /*Filen där prdoukterna finns */)throws FileNotFoundException{
-		this./*Filen där produkterna finns */=;
-		products= parseMovies(/*Filnamnet */);
-	}
-
-	@Override
-	public void add(Product product) {
-		list.add(product);
-		writeInventory();
-	}
-=======
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Scanner;
+import java.util.LinkedList;
 
 public class LibraryInventory<E> implements AddProducts<E> {
 
@@ -60,10 +45,9 @@ public class LibraryInventory<E> implements AddProducts<E> {
 
 	@Override
 	public void add2(E element) {
-		inventory.add(book);
+		inventory.add(movie);
 		writeInventory();
 
 	}
 
->>>>>>> Stashed changes
 }
