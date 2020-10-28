@@ -1,8 +1,3 @@
-
-public interface AddProducts {
-
-	void addMovie(Products movie);
-
-	void addBook(Products book);
-
+public interface AddProducts<E extends Product> {
+	void add(Product product);
 }
