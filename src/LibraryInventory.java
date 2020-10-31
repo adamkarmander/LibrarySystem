@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.LinkedList;
 
-public class LibraryInventory<E extends AddProducts> {
+public class LibraryInventory<E> implements AddProducts<E> {
 
 	private List<E> inventory;
 	private String productPath; // Lagrar sökväg till csv-filen
 
 	inventory=new LinkedList<E>();
 
-	public LibraryInventory(String productPath) throws FileNotFoundException {
+	private List<E> parseProducts(String productPath) throws FileNotFoundException {
 		this.productPath = productPath;
-		productPath = parseMovies(productPath); // Hur parsea ? Även parsea i LibraryStaff?
+		inventory = parseProducts(productPath); // Hur parsea produkterna ?
 		FileReader reading = new FileReader(productPath);
 		Scanner sc = new Scanner(reading);
 
@@ -25,10 +25,9 @@ public class LibraryInventory<E extends AddProducts> {
 		try {
 			PrintWriter printer = new PrintWriter(productPath);
 
-			for (E add1 : inventory) {
-				String csvRec = add1.productCsvRec(); // Hur få ut csvrecord från tex klassen products CsvRec metod?
+			for (E addProduct : inventory) {
+				String csvRec = addProduct.bookCsvRec(); // Hur få ut csvrecord från både book och movie
 				printer.println(csvRec); // Skriver ned csvrecord
-
 			}
 			printer.close();
 		} catch (FileNotFoundException e) {
@@ -37,16 +36,9 @@ public class LibraryInventory<E extends AddProducts> {
 	}
 
 	@Override
-	public void add1(E element) {
-		inventory.add(movie);
-		writeInventory();
-
-	}// Hur lägga till produkterna?
-
-	@Override
-	public void add2(E element) {
-		inventory.add(movie);
-		writeInventory();
+	public void addProduct(E Book) {
+		inventory.add(Book);
+		writeProducts();
 
 	}
 
