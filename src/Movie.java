@@ -16,9 +16,20 @@ public class Movie extends Product {
 		return rating;
 	}
 
+	@Override
+	public String productCsvRec() {
+		super.productCsvRec();
+		return productCsvRec();
+	}// Såhär vi får tag på metoden productCsvRec?
+
+	public String productToString() {
+		super.productToString();
+		return productToString();
+	}// Såhär vi får tag på metoden ProducToString?
+
 	public String movieCsvRec() {
-		return String.format("%d, %.2f", length, rating); // Hur få in productCsvRec?
-	}
+		return String.format("%d, %.2f", length, rating);
+	}// Hur skriva regex för int?
 
 	public String movieToString() {
 		return String.format("%d  %.2f");
