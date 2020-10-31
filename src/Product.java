@@ -1,14 +1,14 @@
 public class Product {
-	private int articleNumber;
-	private String productType;
-	private String productName;
-	private int productValue;
+	protected int articleNumber;
+	protected String productType;
+	protected String productName;
+	protected int productValue;
 
 	public Product(int articleNumber, String productName, int productValue) {
 		this.articleNumber = articleNumber;
 		this.productType = productType;
 		this.productName = productName;
-		// this.productValue = productValue; // Ska endast synas vid kommando register
+		this.productValue = productValue; // Ska endast synas vid användandet av kommandot "register"
 	}
 
 	public int getArticleNumber() {
@@ -23,7 +23,12 @@ public class Product {
 		return productName;
 	}
 
-	public String productCsvRec() { // Hur få in denna metod i book och movie?
+	public int getProductValue() {
+		return productValue;
+
+	}
+
+	public String productCsvRec() {
 		return String.format("%d, %s,%s", articleNumber, productType, productName);
 	} // Vilken regex för int?
 
@@ -31,11 +36,11 @@ public class Product {
 		return "articlenumber, type, name";
 	}
 
-	public static Products parseProducts(String csvRec) { // Behövs metoden?
+	public static void parseProducts(String csvRec) { // Behövs metoden?
 		csvRec.split(", ");
 	}
 
-	public String ProductToString() {
+	public String productToString() {
 		return String.format("%d [%s]: %s.");
 
 	}
