@@ -18,8 +18,8 @@ public class LibraryInventory<E> implements AddProducts<E> {
 		inventory = parseProducts(productPath); // Hur parsea produkterna ?
 		FileReader reading = new FileReader(productPath);
 		Scanner sc = new Scanner(reading);
-
-	}sc.close();
+		sc.close();
+	}
 
 	private void writeProducts() { // Uppdaterar csv-filen med de nuvarande produkterna
 		try {
@@ -38,6 +38,14 @@ public class LibraryInventory<E> implements AddProducts<E> {
 	@Override
 	public void addProduct(E Book) {
 		inventory.add(Book);
+		writeProducts();
+
+	}
+
+	@Override
+	public void addProduct2(E Movie) {
+
+		inventory.add(Movie);
 		writeProducts();
 
 	}
