@@ -1,12 +1,106 @@
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.PrintWriter;
+//import java.io.FileNotFoundException;
+//import java.io.FileReader;
+//import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.LinkedList;
+//import java.util.LinkedList;
 
-public class LibraryInventory<E> implements AddProducts<E> {
+public class LibraryInventory {
+	Scanner scanner = new Scanner(System.in);
+	
+	private List<Product> inventory;
+	
+	public LibraryInventory() {
+		inventory = new ArrayList<Product>();
+	}
+	
+	public void addProduct(Product product) {
+		inventory.add(product);
+	}
+	
+	public void borrowProduct(String argument) {
+		for(int i = 0; i < inventory.size(); i++) {
+			Product p = inventory.get(i);
+			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
+				if(p.borrowingCustomer != null) {
+					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
+				} else {
+					String name;
+					String phonenumber;
+					
+					System.out.println("Enter customer name:");
+			        name = scanner.next();
+			        System.out.println("Enter customer phone number:");
+			        phonenumber = scanner.next();
+			        p.borrowingCustomer = new Customer(name, phonenumber);
+			        System.out.println("Successfully lended " + p.getProductName() + " to " + name);
+				}
+			}
+		}
+	}
+	
+	public void returnProduct(String argument) {
+		for(int i = 0; i < inventory.size(); i++) {
+			Product p = inventory.get(i);
+			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
+				if(p.borrowingCustomer != null) {
+					System.out.println("Successfully returned " + p.getProductName() + " from " + p.borrowingCustomer.getName());
+				} else {
+					System.out.println("Cannot return " + p.getProductName() + ". It is not borrowed by any customer.");
+				}
+			}
+		}
+	}
+	
+	public String getInfo(String argument) {
+		for(int i = 0; i < inventory.size(); i++) {
+			Product p = inventory.get(i);
+			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
+				if(p.getProductType() == "Book") {
+					Book b = (Book)p;
+					return "(" + b.getProductType() + ") "+ b.getProductName() + ": Value " + b.getProductValue() + "kr, Pages " + b.getPages() + ", Author " + b.getAuthor();
+				}
+				else if(p.getProductType() == "Movie") {
+					Movie m = (Movie)p;
+					return "(" + m.getProductType() + ") " + m.getProductName() + ": Value " + m.getProductValue() + "kr, Length " + m.getLength() + "m, Rating " + m.getRating();
+				}
+			}
+		}
+		return "Error: No product with id " + argument + " registered.";
+	}
+	
+	public boolean isRegistered(int id) {
+		for(int i = 0; i < inventory.size(); i++) {
+			Product p = inventory.get(i);
+			if(p.getArticleNumber() == id) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public String deregister(String argument) {
+		for(int i = 0; i < inventory.size(); i++) {
+			Product p = inventory.get(i);
+			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
+				inventory.remove(p);
+				return "Successfully deregistered " + p.getProductName();
+			}
+		}
+		return "Error: There is no registered product with ID " + argument;
+	}
+	
+	@Override
+	public String toString() {
+		String productsToPrintOut = "";
+		for(int i = 0; i < inventory.size(); i++) {
+			Product p = inventory.get(i);
+			productsToPrintOut = productsToPrintOut + p.toString();
+		}
+		return productsToPrintOut;
+	}
+/*public class LibraryInventory<E> implements AddProducts<E> {
 
 	private List<E> inventory;
 	private String productPath; // Lagrar sökväg till csv-filen
@@ -49,5 +143,5 @@ public class LibraryInventory<E> implements AddProducts<E> {
 		writeProducts();
 
 	}
-
+	*/
 }

@@ -1,9 +1,9 @@
 public class Movie extends Product {
 	private int length;
-	private float rating;
+	private double rating;
 
-	public Movie(int articleNumber, String productName, int productValue, int length, float rating) {
-		super(articleNumber, productName, productValue);
+	public Movie(int articleNumber, String productType, String productName, int productValue, int length, double rating) {
+		super(articleNumber, productType, productName, productValue);
 		this.length = length;
 		this.rating = rating;
 	}
@@ -11,11 +11,20 @@ public class Movie extends Product {
 	public int getLength() {
 		return length;
 	}
-
-	public float getRating() {
-		return rating;
+	
+	public void setLength(int newLength) {
+		length = newLength;
 	}
 
+	public double getRating() {
+		return rating;
+	}
+	
+	public void setRating(double newRating) {
+		rating = newRating;
+	}
+
+	/*
 	@Override
 	public String productCsvRec() {
 		super.productCsvRec();
@@ -34,4 +43,5 @@ public class Movie extends Product {
 	public String movieToString() {
 		return String.format("%d  %.2f");
 	}
+	*/
 }

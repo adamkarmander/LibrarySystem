@@ -2,8 +2,14 @@ public class Book extends Product {
 	private int pages;
 	private String author;
 
-	public Book(int articleNumber, String productName, int productValue, int pages, String author) {
-		super(articleNumber, productName, productValue);
+	public Book(int articleNumber, String productType, String productName, int productValue, int pages, String author) {
+		super(articleNumber, productType, productName, productValue);
+		this.pages = pages;
+		this.author = author;
+	}
+	
+	public Book(int articleNumber, String productType, String productName, int productValue, int pages, String author, Customer borrowingCustomer) {
+		super(articleNumber, productType, productName, productValue, borrowingCustomer);
 		this.pages = pages;
 		this.author = author;
 	}
@@ -11,11 +17,19 @@ public class Book extends Product {
 	public int getPages() {
 		return pages;
 	}
+	
+	public void setPages(int newPages) {
+		pages = newPages;
+	}
 
 	public String getAuthor() {
 		return author;
 	}
-
+	
+	public void setAuthor(String newAuthor) {
+		author = newAuthor;
+	}
+	/*
 	@Override
 	public String productCsvRec() {
 		super.productCsvRec();
@@ -35,4 +49,5 @@ public class Book extends Product {
 	public String bookToString() {
 		return String.format("%d  %s.");
 	}
+	*/
 }
