@@ -24,8 +24,10 @@ public class LibraryInventory {
 			Product p = inventory.get(i);
 			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if(p.borrowingCustomer != null) {
+					//Cannot lend the product to someone because it's already borrowed
 					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
 				} else {
+					//The product can be borrowed
 					String name;
 					String phonenumber;
 					
@@ -45,9 +47,11 @@ public class LibraryInventory {
 			Product p = inventory.get(i);
 			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if(p.borrowingCustomer != null) {
+					//Return the borrowed product
 					System.out.println("Successfully returned " + p.getProductName() + " from " + p.borrowingCustomer.getName());
 					p.borrowingCustomer = null;
 				} else {
+					//No one is borrowing it, the product cannot be returned
 					System.out.println("Cannot return " + p.getProductName() + ". It is not borrowed by any customer.");
 				}
 			}
@@ -59,10 +63,12 @@ public class LibraryInventory {
 			Product p = inventory.get(i);
 			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if(p.getProductType() == "Book") {
+					//Type casting so Book class methods can be used
 					Book b = (Book)p;
 					return "(" + b.getProductType() + ") "+ b.getProductName() + ": Value " + b.getProductValue() + "kr, Pages " + b.getPages() + ", Author " + b.getAuthor();
 				}
 				else if(p.getProductType() == "Movie") {
+					//Type casting so Movie class methods can be used
 					Movie m = (Movie)p;
 					return "(" + m.getProductType() + ") " + m.getProductName() + ": Value " + m.getProductValue() + "kr, Length " + m.getLength() + "m, Rating " + m.getRating();
 				}
@@ -75,6 +81,7 @@ public class LibraryInventory {
 		for(int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if(p.getArticleNumber() == id) {
+				//There is a book with that ID/article number
 				return true;
 			}
 		}
@@ -85,6 +92,7 @@ public class LibraryInventory {
 		for(int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
+				//Removes the product with that ID from the list
 				inventory.remove(p);
 				return "Successfully deregistered " + p.getProductName();
 			}
@@ -97,6 +105,7 @@ public class LibraryInventory {
 		String productsToPrintOut = "";
 		for(int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
+			//Adds all the products in the list so they can be printed out
 			productsToPrintOut = productsToPrintOut + p.toString();
 		}
 		return productsToPrintOut;

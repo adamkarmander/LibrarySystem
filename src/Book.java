@@ -8,8 +8,7 @@ public class Book extends Product {
 		this.author = author;
 	}
 
-	public Book(int articleNumber, String productType, String productName, int productValue, int pages, String author,
-			Costumer borrowingCustomer) {
+	public Book(int articleNumber, String productType, String productName, int productValue, int pages, String author, Customer borrowingCustomer) {
 		super(articleNumber, productType, productName, productValue, borrowingCustomer);
 		this.pages = pages;
 		this.author = author;

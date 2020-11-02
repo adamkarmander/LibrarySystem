@@ -12,8 +12,7 @@ public class Product {
 		this.productValue = productValue;
 	}
 
-	public Product(int articleNumber, String productType, String productName, int productValue,
-			Customer borrowingCustomer) {
+	public Product(int articleNumber, String productType, String productName, int productValue, Customer borrowingCustomer) {
 		this.articleNumber = articleNumber;
 		this.productType = productType;
 		this.productName = productName;
@@ -56,10 +55,11 @@ public class Product {
 	@Override
 	public String toString() {
 		if (borrowingCustomer == null) {
+			//If no one is borrowing this product, it's in stock:
 			return articleNumber + " (" + productType + "): " + productName + ". (in stock)\n";
 		}
-		return articleNumber + " (" + productType + "): " + productName + ".\n    Borrowed by: "
-				+ borrowingCustomer.getName() + ", " + borrowingCustomer.getNumber() + "\n";
+		//Prints product information and name and number of customer borrowing it
+		return articleNumber + " (" + productType + "): " + productName + ".\n    Borrowed by: " + borrowingCustomer.getName() + ", " + borrowingCustomer.getNumber() + "\n";
 	}
 	/*
 	 * public String productCsvRec() { return String.format("%d, %s,%s",

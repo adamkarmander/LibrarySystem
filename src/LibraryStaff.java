@@ -40,6 +40,7 @@ public class LibraryStaff {
 	}
 
 	public static void main(String[] args) {
+		//Creates an instance of LibraryInventory, so its methods can be called
 		LibraryInventory lib = new LibraryInventory();
 
 		try {
@@ -55,11 +56,13 @@ public class LibraryStaff {
 	Customer customer1 = new Customer("Tomas Larsson", "073-683-3307");
 	Book book1 = new Book(12345, "Book", "Utvandrarna", 99, 573, "Vilhelm Moberg", customer1);
 	Book book2 = new Book(13370, "Book", "Historien om Titanic", 99, 45, "Francesca Baines");
-	Movie movie1 = new Movie(20202, "Movie", "Djungelboken", 169, 78,
-			7.6);lib.addProduct(book1);lib.addProduct(book2);lib.addProduct(movie1);
+	Movie movie1 = new Movie(20202, "Movie", "Djungelboken", 169, 78, 7.6);
+	lib.addProduct(book1);
+	lib.addProduct(book2);
+	lib.addProduct(movie1);
 
-	Scanner scanner = new Scanner(System.in);while(true)
-	{
+	Scanner scanner = new Scanner(System.in);
+	while(true) {
 		String userInput = scanner.nextLine();
 		Command command = parseCommand(userInput);
 		String argument = parseArgument(userInput);
@@ -119,4 +122,4 @@ public class LibraryStaff {
 			continue;
 		}
 	}
-}}
+}
