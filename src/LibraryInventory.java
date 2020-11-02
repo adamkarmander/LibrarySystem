@@ -46,6 +46,7 @@ public class LibraryInventory {
 			if(String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if(p.borrowingCustomer != null) {
 					System.out.println("Successfully returned " + p.getProductName() + " from " + p.borrowingCustomer.getName());
+					p.borrowingCustomer = null;
 				} else {
 					System.out.println("Cannot return " + p.getProductName() + ". It is not borrowed by any customer.");
 				}
