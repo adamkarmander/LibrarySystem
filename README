@@ -2,17 +2,18 @@ Creators of LibrarySystem: Julia Berg & Adam Kärmander
 
 Instructions:
 
-In this librarysystem you will be able to see what type of products that are available and borrow them out to costumers.
-You will also be able to see what type of products that are on borrowed and to whom.
+In this librarysystem you will be able to see what type of products that are available and lend them out to costumers.
+You will also be able to see what type of products that are lent and to whom.
 
 To use the system you can use one of the following commands:
 
 list- Shows the products and their status.
 
-checkout- Write this command followed by the costumers name and phonenumber to borrow a product to that person. 
+checkout- Write this command followed by the costumers name, phonenumber and the articlenumber on a product you want to lend out to a person.   
 (The product will no longer be visible in the library).
 
-checkin- Takes back the a borrowed product (The product will be visible in the library again).
+checkin- Write this command followed by the articlenumber on the lent product you want to take back.
+ (The product will be visible in the library again).
 
 register- Write this command followed by the attributes on the new product you want to add.
 
