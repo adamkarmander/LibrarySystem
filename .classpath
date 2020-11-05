@@ -6,6 +6,6 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Users/juliaberg/eclipse-workspace/commons-csv-1.8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/adamk/OneDrive/Skrivbord/commons-csv-1.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -2,6 +2,7 @@
 //import java.io.FileNotFoundException;
 //import java.io.FileReader;
 //import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,9 +17,42 @@ public class LibraryInventory {
 		inventory = new ArrayList<Product>();
 	}
 
+	public void save(File csvFile) {
+		String csvRecord;
+		try {
+			PrintWriter printWriter = new PrintWriter(csvFile);
+			for (int i = 0; i < inventory.size(); i++) {
+				Product p = inventory.get(i);
+				if(p.getProductType() == "Book") {
+					Book b = (Book) p;
+					//Someone is borrowing the Book
+					if(b.borrowingCustomer != null) {
+						csvRecord = String.valueOf(b.getArticleNumber() + "," + b.getProductType() + "," + b.getProductName() + "," + b.getProductValue() + "," + b.getPages() + "," + b.getAuthor() + "," + b.borrowingCustomer.getName() + "," + b.borrowingCustomer.getNumber());
+						printWriter.println(csvRecord);
+					} else {
+						csvRecord = String.valueOf(b.getArticleNumber() + "," + b.getProductType() + "," + b.getProductName() + "," + b.getProductValue() + "," + b.getPages() + "," + b.getAuthor());
+						printWriter.println(csvRecord);
+					}
+				} else if(p.getProductType() == "Movie") {
+					Movie m = (Movie) p;
+					//Someone is borrowing the Movie
+					if(m.borrowingCustomer != null) {
+						csvRecord = String.valueOf(m.getArticleNumber() + "," + m.getProductType() + "," + m.getProductName() + "," + m.getProductValue() + "," + m.getLength() + "," + m.getRating() + "," + m.borrowingCustomer.getName() + "," + m.borrowingCustomer.getNumber());
+						printWriter.println(csvRecord);
+					} else {
+						csvRecord = String.valueOf(m.getArticleNumber() + "," + m.getProductType() + "," + m.getProductName() + "," + m.getProductValue() + "," + m.getLength() + "," + m.getRating());
+						printWriter.println(csvRecord);
+					}
+				}
+			}
+			printWriter.close();
+		} catch(FileNotFoundException e) {
+			System.out.println("Error. File not found.");
+		}
+	}
+	
 	public void addProduct(Product product) {
 		inventory.add(product);
-
 	}
 
 	public void borrowProduct(String argument) {
