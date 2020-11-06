@@ -86,13 +86,13 @@ public class LibraryStaff {
 					String csvRecord = filescanner.nextLine();
 					String[] values = csvRecord.split(",");
 					if (values[1].equals("Book")) {
-						// If it's a borrowed Book
 						if (values.length == 8) {
+							// If it's a borrowed Book
 							Customer customer = new Customer(values[6], values[7]);
 							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5], customer);
 							lib.addProduct(book);
-							// No one is borrowing the Book
 						} else {
+							// No one is borrowing the Book
 							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5]);
 							lib.addProduct(book);
 						}
@@ -100,13 +100,11 @@ public class LibraryStaff {
 						// If it's a borrowed Movie
 						if (values.length == 8) {
 							Customer customer = new Customer(values[6], values[7]);
-							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
-							Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]), customer);
+							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]), customer);
 							lib.addProduct(movie);
 							// No one is borrowing the Movie
 						} else {
-							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
-							Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
+							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
 							lib.addProduct(movie);
 						}
 					}
