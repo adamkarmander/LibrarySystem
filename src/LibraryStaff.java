@@ -67,12 +67,9 @@ public class LibraryStaff {
 				lib.addProduct(m);
 
 				// Printing them to the CSV file
-				print.printRecord(b1.getArticleNumber(), b1.getProductType(), b1.getProductName(), b1.getProductValue(),
-						b1.getPages(), b1.getAuthor(), customer.getName(), customer.getNumber());
-				print.printRecord(b2.getArticleNumber(), b2.getProductType(), b2.getProductName(), b2.getProductValue(),
-						b2.getPages(), b2.getAuthor());
-				print.printRecord(m.getArticleNumber(), m.getProductType(), m.getProductName(), m.getProductValue(),
-						m.getLength(), m.getRating());
+				print.printRecord(b1.getArticleNumber(), b1.getProductType(), b1.getProductName(), b1.getProductValue(), b1.getPages(), b1.getAuthor(), customer.getName(), customer.getNumber());
+				print.printRecord(b2.getArticleNumber(), b2.getProductType(), b2.getProductName(), b2.getProductValue(), b2.getPages(), b2.getAuthor());
+				print.printRecord(m.getArticleNumber(), m.getProductType(), m.getProductName(), m.getProductValue(),m.getLength(), m.getRating());
 				print.close();
 			} catch (IOException e) {
 				System.out.println("Caught an IOException.");
@@ -92,13 +89,11 @@ public class LibraryStaff {
 						// If it's a borrowed Book
 						if (values.length == 8) {
 							Customer customer = new Customer(values[6], values[7]);
-							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5], customer);
+							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5], customer);
 							lib.addProduct(book);
 							// No one is borrowing the Book
 						} else {
-							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5]);
+							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5]);
 							lib.addProduct(book);
 						}
 					} else if (values[1].equals("Movie")) {
@@ -106,13 +101,12 @@ public class LibraryStaff {
 						if (values.length == 8) {
 							Customer customer = new Customer(values[6], values[7]);
 							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]),
-									customer);
+							Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]), customer);
 							lib.addProduct(movie);
 							// No one is borrowing the Movie
 						} else {
 							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
+							Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
 							lib.addProduct(movie);
 						}
 					}
@@ -131,55 +125,13 @@ public class LibraryStaff {
 			if (command == Command.LIST) {
 				System.out.println(lib.toString());
 			} else if (command == Command.CHECKOUT) {
-				lib.borrowProduct(argument);
-				lib.save(csvFile); // BUG WHEN TRYING TO CHECKOUT AN ALREADY BORROWED PRODUCT
+				lib.borrowProduct(argument, csvFile);
 			} else if (command == Command.CHECKIN) {
-				lib.returnProduct(argument);
-				lib.save(csvFile);
-				if (Movie.Contains(Customer) || Book.Contains(Customer)) {
-					System.out.println("This product is already lent by" + Customer);
-				}
+				lib.returnProduct(argument, csvFile);
 			} else if (command == Command.REGISTER) {
-				String type, title;
-				int id, value;
-				System.out.println("What are you registering? Book (b), Movie (m)");
-				type = scanner.next().toLowerCase();
-				System.out.println("Enter product ID:");
-				id = scanner.nextInt();
-				System.out.println("Enter title:");
-				title = scanner.next();
-				System.out.println("Enter value:");
-				value = scanner.nextInt();
-
-				if (!lib.isRegistered(id)) {
-					if (type.equals("b")) {
-						int pages;
-						String publisher;
-						System.out.println("Enter number of pages:");
-						pages = scanner.nextInt();
-						System.out.println("Enter publisher:");
-						publisher = scanner.next();
-						Book book = new Book(id, "Book", title, value, pages, publisher);
-						lib.addProduct(book);
-					} else if (type.equals("m")) {
-						int length;
-						double rating;
-						System.out.println("Enter length:");
-						length = scanner.nextInt();
-						System.out.println("Enter rating:");
-						rating = scanner.nextDouble();
-						Movie movie = new Movie(id, "Movie", title, value, length, rating);
-						lib.addProduct(movie);
-					}
-					System.out.println("Successfully registered " + title + "!");
-					lib.save(csvFile);
-				} else {
-					System.out.println("Error: Product with ID " + id + " is already registered.");
-				}
+				lib.register(csvFile);
 			} else if (command == Command.DEREGISTER) {
-				System.out.println(lib.deregister(argument));
-				lib.save(csvFile);
-
+				System.out.println(lib.deregister(argument, csvFile));
 			} else if (command == Command.INFO) {
 				System.out.println(lib.getInfo(argument));
 			} else if (command == Command.QUIT) {

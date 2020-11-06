@@ -18,30 +18,41 @@ public class LibraryInventory {
 	}
 
 	public void save(File csvFile) {
-		String csvRecord;
 		try {
 			PrintWriter printWriter = new PrintWriter(csvFile);
 			for (int i = 0; i < inventory.size(); i++) {
 				Product p = inventory.get(i);
+				
+				int articleNumber = p.getArticleNumber();
+				String productType = p.getProductType();
+				String productName = p.getProductName();
+				int productValue = p.getProductValue();
+				
 				if(p.getProductType() == "Book") {
 					Book b = (Book) p;
-					//Someone is borrowing the Book
+					int pages = b.getPages();
+					String author = b.getAuthor();
+					
 					if(b.borrowingCustomer != null) {
-						csvRecord = String.valueOf(b.getArticleNumber() + "," + b.getProductType() + "," + b.getProductName() + "," + b.getProductValue() + "," + b.getPages() + "," + b.getAuthor() + "," + b.borrowingCustomer.getName() + "," + b.borrowingCustomer.getNumber());
-						printWriter.println(csvRecord);
+						//Someone is borrowing the Book
+						String customerName = b.borrowingCustomer.getName();
+						String customerNumber = b.borrowingCustomer.getNumber();
+						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+pages+","+author+","+customerName+","+customerNumber);
 					} else {
-						csvRecord = String.valueOf(b.getArticleNumber() + "," + b.getProductType() + "," + b.getProductName() + "," + b.getProductValue() + "," + b.getPages() + "," + b.getAuthor());
-						printWriter.println(csvRecord);
+						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+pages+","+author);
 					}
 				} else if(p.getProductType() == "Movie") {
 					Movie m = (Movie) p;
-					//Someone is borrowing the Movie
+					int length = m.getLength();
+					double rating = m.getRating();
+					
 					if(m.borrowingCustomer != null) {
-						csvRecord = String.valueOf(m.getArticleNumber() + "," + m.getProductType() + "," + m.getProductName() + "," + m.getProductValue() + "," + m.getLength() + "," + m.getRating() + "," + m.borrowingCustomer.getName() + "," + m.borrowingCustomer.getNumber());
-						printWriter.println(csvRecord);
+						//Someone is borrowing the Movie
+						String customerName = m.borrowingCustomer.getName();
+						String customerNumber = m.borrowingCustomer.getNumber();
+						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+length+","+rating+","+customerName+","+customerNumber);
 					} else {
-						csvRecord = String.valueOf(m.getArticleNumber() + "," + m.getProductType() + "," + m.getProductName() + "," + m.getProductValue() + "," + m.getLength() + "," + m.getRating());
-						printWriter.println(csvRecord);
+						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+length+","+rating);
 					}
 				}
 			}
@@ -55,14 +66,13 @@ public class LibraryInventory {
 		inventory.add(product);
 	}
 
-	public void borrowProduct(String argument) {
+	public void borrowProduct(String argument, File csvFile) {
 		for (int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if (p.borrowingCustomer != null) {
 					// Cannot lend the product to someone because it's already borrowed
-					System.out.println("Cannot lend " + p.getProductName()
-							+ " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
+					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
 				} else {
 					// The product can be borrowed
 					String name;
@@ -73,21 +83,22 @@ public class LibraryInventory {
 					System.out.println("Enter customer phone number:");
 					phonenumber = scanner.next();
 					p.borrowingCustomer = new Customer(name, phonenumber);
+					save(csvFile);
 					System.out.println("Successfully lended " + p.getProductName() + " to " + name);
 				}
 			}
 		}
 	}
 
-	public void returnProduct(String argument) {
+	public void returnProduct(String argument, File csvFile) {
 		for (int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if (p.borrowingCustomer != null) {
 					// Return the borrowed product
-					System.out.println(
-							"Successfully returned " + p.getProductName() + " from " + p.borrowingCustomer.getName());
+					System.out.println("Successfully returned " + p.getProductName() + " from " + p.borrowingCustomer.getName());
 					p.borrowingCustomer = null;
+					save(csvFile);
 				} else {
 					// No one is borrowing it, the product cannot be returned
 					System.out.println("Cannot return " + p.getProductName() + ". It is not borrowed by any customer.");
@@ -126,13 +137,54 @@ public class LibraryInventory {
 		}
 		return false;
 	}
+	
+	public void register(File csvFile) {
+		String type, title;
+		int id, value;
+		System.out.println("What are you registering? Book (b), Movie (m)");
+		type = scanner.next().toLowerCase();
+		System.out.println("Enter product ID:");
+		id = scanner.nextInt();
+		System.out.println("Enter title:");
+		title = scanner.next();
+		System.out.println("Enter value:");
+		value = scanner.nextInt();
 
-	public String deregister(String argument) {
+		if (!isRegistered(id)) {
+			if (type.equals("b")) {
+				int pages;
+				String publisher;
+				System.out.println("Enter number of pages:");
+				pages = scanner.nextInt();
+				System.out.println("Enter publisher:");
+				publisher = scanner.next();
+				Book book = new Book(id, "Book", title, value, pages, publisher);
+				addProduct(book);
+				save(csvFile);
+			} else if (type.equals("m")) {
+				int length;
+				double rating;
+				System.out.println("Enter length:");
+				length = scanner.nextInt();
+				System.out.println("Enter rating:");
+				rating = scanner.nextDouble();
+				Movie movie = new Movie(id, "Movie", title, value, length, rating);
+				addProduct(movie);
+				save(csvFile);
+			}
+			System.out.println("Successfully registered " + title + "!");
+		} else {
+			System.out.println("Error: Product with ID " + id + " is already registered.");
+		}
+	}
+
+	public String deregister(String argument, File csvFile) {
 		for (int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
 				// Removes the product with that ID from the list
 				inventory.remove(p);
+				save(csvFile);
 				return "Successfully deregistered " + p.getProductName();
 			}
 		}
