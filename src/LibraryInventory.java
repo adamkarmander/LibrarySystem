@@ -70,28 +70,35 @@ public class LibraryInventory {
 		inventory.add(product);
 	}
 
-// Hur lägga in Syntax error felmedd om användaren anger fel argument?
 	public void borrowProduct(String argument, File csvFile) {
 		for (int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if (p.borrowingCustomer != null) {
-					// Cannot lend the product to someone because it's already borrowed 
-					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already lent by " + p.borrowingCustomer.getName() + ".");
-				if(p != inventory) {	// Hur felmedd om att inte låna ut en produkt som ej är reg?
-				System.out.println("The product is not registered,try again.");
+					// Cannot lend the product to someone because it's already borrowed
+					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
 				} else {
 					// The product can be borrowed
 					String name;
 					String phonenumber;
 
 					System.out.println("Enter customer name:");
-					name = scanner.next();
-					System.out.println("Enter customer phone number:");
-					phonenumber = scanner.next();
-					p.borrowingCustomer = new Customer(name, phonenumber);
-					save(csvFile);
-					System.out.println("Successfully lent " + p.getProductName() + " to " + name);
+					name = scanner.nextLine();
+					if(name.matches(".*[a-z].*") || (name.contains(" ") && name.matches(".*[a-z].*"))) {
+						System.out.println("Enter customer phone number:");
+						phonenumber = scanner.nextLine();
+						if(phonenumber.matches(".*\\d.*") || ((phonenumber.contains(" ") || phonenumber.contains("-")) && phonenumber.matches(".*\\d.*"))) {
+							p.borrowingCustomer = new Customer(name, phonenumber);
+							save(csvFile);
+							System.out.println("Successfully lended " + p.getProductName() + " to " + name);
+						} else {
+							System.out.println("The phone number must contain numbers!");
+							break;
+						}
+					} else {
+						System.out.println("The name must contain alphabetical characters!");
+						break;
+					}
 				}
 			}
 		}
@@ -148,44 +155,85 @@ public class LibraryInventory {
 	}
 
 	public void register(File csvFile) {
-		String type, title;
-		int id, value;
+		String type, title, id, value;
 		System.out.println("What are you registering? Book (b), Movie (m)");
-		type = scanner.next().toLowerCase();
-		System.out.println("Enter product ID:");
-		id = scanner.nextInt();
-		System.out.println("Enter title:");
-		title = scanner.next();
-		System.out.println("Enter value:");
-		value = scanner.nextInt();
-
-		if (!isRegistered(id)) {
-			if (type.equals("b")) {
-				int pages;
-				String publisher;
-				System.out.println("Enter number of pages:");
-				pages = scanner.nextInt();
-
-				System.out.println("Enter publisher:");
-				publisher = scanner.next();
-				Book book = new Book(id, "Book", title, value, pages, publisher);
-				addProduct(book);
-				save(csvFile);
-			} else if (type.equals("m")) {
-				int length;
-				double rating;
-				System.out.println("Enter length:");
-				length = scanner.nextInt();
-				System.out.println("Enter rating:");
-				rating = scanner.nextDouble();
-				Movie movie = new Movie(id, "Movie", title, value, length, rating);
-				addProduct(movie);
-				save(csvFile);
+		type = scanner.nextLine().toLowerCase();
+		
+		if(type.equals("b") || type.equals("m")) {
+			System.out.println("Enter product ID:");
+			id = scanner.nextLine();
+			try {
+				Integer.parseInt(id);
+			} catch(NumberFormatException e) {
+				System.out.println("Error. The ID has to consist of numbers!");
 			}
-			System.out.println("Successfully registered " + title + "!");
+			if(id.matches(".*\\d.*") && !id.contains(" ")) {
+				System.out.println("Enter title:");
+				title = scanner.nextLine();
+				if(!title.equals("")) {
+					System.out.println("Enter value:");
+					value = scanner.nextLine();
+					try {
+						Integer.parseInt(value);
+					} catch(NumberFormatException e) {
+						System.out.println("Error. The value has to consist of numbers!");
+					}
+					if(value.matches(".*\\d.*") && !value.contains(" ")) {
+						if (!isRegistered(Integer.valueOf(id))) {
+							if (type.equals("b")) {
+								String pages, publisher;
+								System.out.println("Enter number of pages:");
+								pages = scanner.nextLine();
+								try {
+									Integer.parseInt(pages);
+								} catch(NumberFormatException e) {
+									System.out.println("Error. The amount of pages has to consist of numbers!");
+								}
+								if(pages.matches(".*\\d.*") && !pages.contains(" ") && !pages.contains(",")) {
+									System.out.println("Enter publisher:");
+									publisher = scanner.nextLine();
+									if(publisher.matches(".*[a-z].*") || (publisher.contains(" ") && publisher.matches(".*[a-z].*"))) {
+										Book book = new Book(Integer.valueOf(id), "Book", title, Integer.valueOf(value), Integer.valueOf(pages), publisher);
+										addProduct(book);
+										save(csvFile);
+										System.out.println("Successfully registered " + title + "!");
+									} else {
+										System.out.println("Not a valid publisher name!");
+									}
+								}
+							} else if (type.equals("m")) {
+								String length, rating;
+								System.out.println("Enter length:");
+								length = scanner.nextLine();
+								try {
+									Integer.parseInt(length);
+								} catch(NumberFormatException e) {
+									System.out.println("Error. The length can only contain numbers!");
+								}
+								if(length.matches(".*\\d.*") && !length.contains(" ")) {
+									System.out.println("Enter rating:");
+									rating = scanner.nextLine();
+									try {
+										Double.parseDouble(rating);
+										Movie movie = new Movie(Integer.valueOf(id), "Movie", title, Integer.valueOf(value), Integer.valueOf(length), Double.valueOf(rating));
+										addProduct(movie);
+										save(csvFile);
+										System.out.println("Successfully registered " + title + "!");
+									} catch(NumberFormatException e) {
+										System.out.println("Error. The rating can only contain numbers!");
+									}
+								}
+							}
+						} else {
+							System.out.println("Error: Product with ID " + id + " is already registered.");
+						}
+					}
+				} else {
+					System.out.println("That is not a valid title!");
+				}
+			}
 		} else {
-			System.out.println("Error: Product with ID " + id + " is already registered.");
-			// Hur lägga till felmedd för ickenumeriskt värde otillåtet artiklnr?
+			System.out.println("You need to enter b for Book or m for Movie!");
 		}
 	}
 
