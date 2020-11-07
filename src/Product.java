@@ -1,3 +1,4 @@
+
 import java.util.Comparator;
 
 public class Product {
@@ -29,7 +30,9 @@ public class Product {
 				// articleNumber sorteras här i stigande ordning
 
 				return articleNumber1.articleNumber - articleNumber2.articleNumber;
+
 			}
+
 			/*
 			 * Ha med denna text i Main-metoden innan arrayen printas ut?
 			 * 
@@ -80,7 +83,7 @@ public class Product {
 			return articleNumber + " (" + productType + "): " + productName + ". (in stock)\n";
 		}
 		// Prints product information and name and number of customer borrowing it
-		return articleNumber + " (" + productType + "): " + productName + ".\n    Borrowed by: "
+		return articleNumber + " (" + productType + "): " + productName + ".\n   lent by: "
 				+ borrowingCustomer.getName() + ", " + borrowingCustomer.getNumber() + "\n";
 	}
 	/*
@@ -97,4 +100,9 @@ public class Product {
 	 * 
 	 * }
 	 */
+
+	public static boolean Contains(Customer customer) {
+
+		return false;
+	}
 }

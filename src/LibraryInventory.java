@@ -22,57 +22,64 @@ public class LibraryInventory {
 			PrintWriter printWriter = new PrintWriter(csvFile);
 			for (int i = 0; i < inventory.size(); i++) {
 				Product p = inventory.get(i);
-				
+
 				int articleNumber = p.getArticleNumber();
 				String productType = p.getProductType();
 				String productName = p.getProductName();
 				int productValue = p.getProductValue();
-				
-				if(p.getProductType() == "Book") {
+
+				if (p.getProductType() == "Book") {
 					Book b = (Book) p;
 					int pages = b.getPages();
 					String author = b.getAuthor();
-					
-					if(b.borrowingCustomer != null) {
-						//Someone is borrowing the Book
+
+					if (b.borrowingCustomer != null) {
+						// Someone is borrowing the Book
 						String customerName = b.borrowingCustomer.getName();
 						String customerNumber = b.borrowingCustomer.getNumber();
-						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+pages+","+author+","+customerName+","+customerNumber);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
+								+ "," + pages + "," + author + "," + customerName + "," + customerNumber);
 					} else {
-						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+pages+","+author);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
+								+ "," + pages + "," + author);
 					}
-				} else if(p.getProductType() == "Movie") {
+				} else if (p.getProductType() == "Movie") {
 					Movie m = (Movie) p;
 					int length = m.getLength();
 					double rating = m.getRating();
-					
-					if(m.borrowingCustomer != null) {
-						//Someone is borrowing the Movie
+
+					if (m.borrowingCustomer != null) {
+						// Someone is borrowing the Movie
 						String customerName = m.borrowingCustomer.getName();
 						String customerNumber = m.borrowingCustomer.getNumber();
-						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+length+","+rating+","+customerName+","+customerNumber);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
+								+ "," + length + "," + rating + "," + customerName + "," + customerNumber);
 					} else {
-						printWriter.println(articleNumber+","+productType+","+productName+","+productValue+","+length+","+rating);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
+								+ "," + length + "," + rating);
 					}
 				}
 			}
 			printWriter.close();
-		} catch(FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			System.out.println("Error. File not found.");
 		}
 	}
-	
+
 	public void addProduct(Product product) {
 		inventory.add(product);
 	}
 
+// Hur lägga in Syntax error felmedd om användaren anger fel argument?
 	public void borrowProduct(String argument, File csvFile) {
 		for (int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if (p.borrowingCustomer != null) {
-					// Cannot lend the product to someone because it's already borrowed
-					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
+					// Cannot lend the product to someone because it's already borrowed 
+					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already lent by " + p.borrowingCustomer.getName() + ".");
+				if(p != inventory) {	// Hur felmedd om att inte låna ut en produkt som ej är reg?
+				System.out.println("The product is not registered,try again.");
 				} else {
 					// The product can be borrowed
 					String name;
@@ -84,7 +91,7 @@ public class LibraryInventory {
 					phonenumber = scanner.next();
 					p.borrowingCustomer = new Customer(name, phonenumber);
 					save(csvFile);
-					System.out.println("Successfully lended " + p.getProductName() + " to " + name);
+					System.out.println("Successfully lent " + p.getProductName() + " to " + name);
 				}
 			}
 		}
@@ -96,12 +103,13 @@ public class LibraryInventory {
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if (p.borrowingCustomer != null) {
 					// Return the borrowed product
-					System.out.println("Successfully returned " + p.getProductName() + " from " + p.borrowingCustomer.getName());
+					System.out.println(
+							"Successfully returned " + p.getProductName() + " from " + p.borrowingCustomer.getName());
 					p.borrowingCustomer = null;
 					save(csvFile);
 				} else {
 					// No one is borrowing it, the product cannot be returned
-					System.out.println("Cannot return " + p.getProductName() + ". It is not borrowed by any customer.");
+					System.out.println("Cannot return " + p.getProductName() + ". It is not lent by any customer.");
 				}
 			}
 		}
@@ -124,7 +132,7 @@ public class LibraryInventory {
 				}
 			}
 		}
-		return "Error: No product with id " + argument + " registered.";
+		return "Error: No product with id " + argument + " are registered.";
 	}
 
 	public boolean isRegistered(int id) {
@@ -136,8 +144,9 @@ public class LibraryInventory {
 			}
 		}
 		return false;
+
 	}
-	
+
 	public void register(File csvFile) {
 		String type, title;
 		int id, value;
@@ -156,6 +165,7 @@ public class LibraryInventory {
 				String publisher;
 				System.out.println("Enter number of pages:");
 				pages = scanner.nextInt();
+
 				System.out.println("Enter publisher:");
 				publisher = scanner.next();
 				Book book = new Book(id, "Book", title, value, pages, publisher);
@@ -175,6 +185,7 @@ public class LibraryInventory {
 			System.out.println("Successfully registered " + title + "!");
 		} else {
 			System.out.println("Error: Product with ID " + id + " is already registered.");
+			// Hur lägga till felmedd för ickenumeriskt värde otillåtet artiklnr?
 		}
 	}
 

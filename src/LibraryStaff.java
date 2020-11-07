@@ -3,11 +3,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Scanner;
 
 import org.apache.commons.csv.*;
 
 public class LibraryStaff {
+
 	enum Command {
 		LIST, CHECKOUT, CHECKIN, REGISTER, DEREGISTER, INFO, QUIT, UNKNOWN
 	}
@@ -43,8 +45,10 @@ public class LibraryStaff {
 	}
 
 	public static void main(String[] args) {
+
 		Scanner scanner = new Scanner(System.in);
 		LibraryInventory lib = new LibraryInventory();
+		Collections.sort(lib, new SortProducts());
 
 		String filePath = "library_csv.csv";
 		File csvFile = new File(filePath);
@@ -67,9 +71,12 @@ public class LibraryStaff {
 				lib.addProduct(m);
 
 				// Printing them to the CSV file
-				print.printRecord(b1.getArticleNumber(), b1.getProductType(), b1.getProductName(), b1.getProductValue(), b1.getPages(), b1.getAuthor(), customer.getName(), customer.getNumber());
-				print.printRecord(b2.getArticleNumber(), b2.getProductType(), b2.getProductName(), b2.getProductValue(), b2.getPages(), b2.getAuthor());
-				print.printRecord(m.getArticleNumber(), m.getProductType(), m.getProductName(), m.getProductValue(),m.getLength(), m.getRating());
+				print.printRecord(b1.getArticleNumber(), b1.getProductType(), b1.getProductName(), b1.getProductValue(),
+						b1.getPages(), b1.getAuthor(), customer.getName(), customer.getNumber());
+				print.printRecord(b2.getArticleNumber(), b2.getProductType(), b2.getProductName(), b2.getProductValue(),
+						b2.getPages(), b2.getAuthor());
+				print.printRecord(m.getArticleNumber(), m.getProductType(), m.getProductName(), m.getProductValue(),
+						m.getLength(), m.getRating());
 				print.close();
 			} catch (IOException e) {
 				System.out.println("Caught an IOException.");
@@ -89,22 +96,27 @@ public class LibraryStaff {
 						if (values.length == 8) {
 							// If it's a borrowed Book
 							Customer customer = new Customer(values[6], values[7]);
-							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5], customer);
+							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2],
+									Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5], customer);
 							lib.addProduct(book);
 						} else {
 							// No one is borrowing the Book
-							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5]);
+							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2],
+									Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5]);
 							lib.addProduct(book);
 						}
 					} else if (values[1].equals("Movie")) {
 						// If it's a borrowed Movie
 						if (values.length == 8) {
 							Customer customer = new Customer(values[6], values[7]);
-							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]), customer);
+							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
+									Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]),
+									customer);
 							lib.addProduct(movie);
 							// No one is borrowing the Movie
 						} else {
-							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
+							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
+									Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
 							lib.addProduct(movie);
 						}
 					}
@@ -124,6 +136,7 @@ public class LibraryStaff {
 				System.out.println(lib.toString());
 			} else if (command == Command.CHECKOUT) {
 				lib.borrowProduct(argument, csvFile);
+
 			} else if (command == Command.CHECKIN) {
 				lib.returnProduct(argument, csvFile);
 			} else if (command == Command.REGISTER) {
@@ -132,6 +145,7 @@ public class LibraryStaff {
 				System.out.println(lib.deregister(argument, csvFile));
 			} else if (command == Command.INFO) {
 				System.out.println(lib.getInfo(argument));
+
 			} else if (command == Command.QUIT) {
 				System.out.println("Goodbye!");
 				scanner.close();
