@@ -47,8 +47,7 @@ public class Product implements Comparable<Product> {
 			return articleNumber + " (" + productType + "): " + productName + ". (in stock)\n";
 		}
 		// Prints product information and name and number of customer borrowing it
-		return articleNumber + " (" + productType + "): " + productName + ".\n   lent by: "
-				+ borrowingCustomer.getName() + ", " + borrowingCustomer.getNumber() + "\n";
+		return articleNumber + " (" + productType + "): " + productName + ".\n   lent by: " + borrowingCustomer.getName() + ", " + borrowingCustomer.getNumber() + "\n";
 	}
 
 	@Override

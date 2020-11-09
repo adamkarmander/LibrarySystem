@@ -43,7 +43,6 @@ public class LibraryStaff {
 
 		Scanner scanner = new Scanner(System.in);
 		LibraryInventory lib = new LibraryInventory();
-		// Collections.sort(lib, new SortProducts());
 
 		String filePath = "library_csv.csv";
 		File csvFile = new File(filePath);
@@ -66,12 +65,9 @@ public class LibraryStaff {
 				lib.addProduct(m);
 
 				// Printing them to the CSV file
-				print.printRecord(b1.getArticleNumber(), b1.getProductType(), b1.getProductName(), b1.getProductValue(),
-						b1.getPages(), b1.getAuthor(), customer.getName(), customer.getNumber());
-				print.printRecord(b2.getArticleNumber(), b2.getProductType(), b2.getProductName(), b2.getProductValue(),
-						b2.getPages(), b2.getAuthor());
-				print.printRecord(m.getArticleNumber(), m.getProductType(), m.getProductName(), m.getProductValue(),
-						m.getLength(), m.getRating());
+				print.printRecord(b1.getArticleNumber(), b1.getProductType(), b1.getProductName(), b1.getProductValue(), b1.getPages(), b1.getAuthor(), customer.getName(), customer.getNumber());
+				print.printRecord(b2.getArticleNumber(), b2.getProductType(), b2.getProductName(), b2.getProductValue(), b2.getPages(), b2.getAuthor());
+				print.printRecord(m.getArticleNumber(), m.getProductType(), m.getProductName(), m.getProductValue(), m.getLength(), m.getRating());
 				print.close();
 			} catch (IOException e) {
 				System.out.println("Caught an IOException.");
@@ -91,27 +87,22 @@ public class LibraryStaff {
 						if (values.length == 8) {
 							// If it's a borrowed Book
 							Customer customer = new Customer(values[6], values[7]);
-							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5], customer);
+							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5], customer);
 							lib.addProduct(book);
 						} else {
 							// No one is borrowing the Book
-							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5]);
+							Book book = new Book(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), values[5]);
 							lib.addProduct(book);
 						}
 					} else if (values[1].equals("Movie")) {
 						// If it's a borrowed Movie
 						if (values.length == 8) {
 							Customer customer = new Customer(values[6], values[7]);
-							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]),
-									customer);
+							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]), customer);
 							lib.addProduct(movie);
 							// No one is borrowing the Movie
 						} else {
-							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2],
-									Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
+							Movie movie = new Movie(Integer.valueOf(values[0]), values[1], values[2], Integer.valueOf(values[3]), Integer.valueOf(values[4]), Double.valueOf(values[5]));
 							lib.addProduct(movie);
 						}
 					}
@@ -123,7 +114,7 @@ public class LibraryStaff {
 		}
 
 		while (true) {
-			System.out.println("Enter your command here:");
+			System.out.println("\nEnter your command here:");
 			System.out.print("> ");
 			String userInput = scanner.nextLine();
 			Command command = parseCommand(userInput);
@@ -152,7 +143,7 @@ public class LibraryStaff {
 						System.out.println(lib.getInfo(argument));
 					}
 				} else {
-					System.out.println("Syntax error. You must also add an articlenumber");
+					System.out.println("Syntax error. You must also add an article number");
 				}
 			}
 		}
