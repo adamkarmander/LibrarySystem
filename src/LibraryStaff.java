@@ -156,7 +156,7 @@ public class LibraryStaff {
 						System.out.println(lib.getInfo(argument));
 					}
 				} else {
-					System.out.println("Syntax error. You must also add an articleNumber");
+					System.out.println("Syntax error. You must also add an articlenumber");
 				}
 			}
 		}
