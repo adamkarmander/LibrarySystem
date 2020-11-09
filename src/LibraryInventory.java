@@ -2,21 +2,23 @@
 //import java.io.FileNotFoundException;
 //import java.io.FileReader;
 //import java.io.PrintWriter;
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Scanner;
 //import java.util.LinkedList;
 
 public class LibraryInventory {
 	Scanner scanner = new Scanner(System.in);
 
-	private List<Product> inventory;
+	ArrayList<Product> inventory = new ArrayList<Product>();
+	// private List<Product> inventory;
 
-	public LibraryInventory() {
-		inventory = new ArrayList<Product>();
-	}
+	// public LibraryInventory() {
+	// inventory = new ArrayList<Product>();
+	// }
 
 	public void save(File csvFile) {
 		try {
@@ -78,7 +80,8 @@ public class LibraryInventory {
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
 				if (p.borrowingCustomer != null) {
 					// Cannot lend the product to someone because it's already borrowed
-					System.out.println("Cannot lend " + p.getProductName() + " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
+					System.out.println("Cannot borrow " + p.getProductName()
+							+ " to another customer. It is already borrowed by " + p.borrowingCustomer.getName() + ".");
 				} else {
 					// The product can be borrowed
 					String name;
@@ -86,13 +89,14 @@ public class LibraryInventory {
 
 					System.out.println("Enter customer name:");
 					name = scanner.nextLine();
-					if(name.matches(".*[a-z].*") || (name.contains(" ") && name.matches(".*[a-z].*"))) {
+					if (name.matches(".*[a-z].*") || (name.contains(" ") && name.matches(".*[a-z].*"))) {
 						System.out.println("Enter customer phone number:");
 						phonenumber = scanner.nextLine();
-						if(phonenumber.matches(".*\\d.*") || ((phonenumber.contains(" ") || phonenumber.contains("-")) && phonenumber.matches(".*\\d.*"))) {
+						if (phonenumber.matches(".*\\d.*") || ((phonenumber.contains(" ") || phonenumber.contains("-"))
+								&& phonenumber.matches(".*\\d.*"))) {
 							p.borrowingCustomer = new Customer(name, phonenumber);
 							save(csvFile);
-							System.out.println("Successfully lended " + p.getProductName() + " to " + name);
+							System.out.println("Successfully borrowed" + p.getProductName() + " to " + name);
 						} else {
 							System.out.println("The phone number must contain numbers!");
 							break;
@@ -118,7 +122,7 @@ public class LibraryInventory {
 					save(csvFile);
 				} else {
 					// No one is borrowing it, the product cannot be returned
-					System.out.println("Cannot return " + p.getProductName() + ". It is not lent by any customer.");
+					System.out.println("Cannot return " + p.getProductName() + ". It is not borrowed by any customer.");
 				}
 			}
 		}
@@ -160,27 +164,27 @@ public class LibraryInventory {
 		String type, title, id, value;
 		System.out.println("What are you registering? Book (b), Movie (m)");
 		type = scanner.nextLine().toLowerCase();
-		
-		if(type.equals("b") || type.equals("m")) {
+
+		if (type.equals("b") || type.equals("m")) {
 			System.out.println("Enter product ID:");
 			id = scanner.nextLine();
 			try {
 				Integer.parseInt(id);
-			} catch(NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Error. The ID has to consist of numbers!");
 			}
-			if(id.matches(".*\\d.*") && !id.contains(" ")) {
+			if (id.matches(".*\\d.*") && !id.contains(" ")) {
 				System.out.println("Enter title:");
 				title = scanner.nextLine();
-				if(!title.equals("")) {
+				if (!title.equals("")) {
 					System.out.println("Enter value:");
 					value = scanner.nextLine();
 					try {
 						Integer.parseInt(value);
-					} catch(NumberFormatException e) {
+					} catch (NumberFormatException e) {
 						System.out.println("Error. The value has to consist of numbers!");
 					}
-					if(value.matches(".*\\d.*") && !value.contains(" ")) {
+					if (value.matches(".*\\d.*") && !value.contains(" ")) {
 						if (!isRegistered(Integer.valueOf(id))) {
 							if (type.equals("b")) {
 								String pages, publisher;
@@ -188,14 +192,16 @@ public class LibraryInventory {
 								pages = scanner.nextLine();
 								try {
 									Integer.parseInt(pages);
-								} catch(NumberFormatException e) {
+								} catch (NumberFormatException e) {
 									System.out.println("Error. The amount of pages has to consist of numbers!");
 								}
-								if(pages.matches(".*\\d.*") && !pages.contains(" ") && !pages.contains(",")) {
+								if (pages.matches(".*\\d.*") && !pages.contains(" ") && !pages.contains(",")) {
 									System.out.println("Enter publisher:");
 									publisher = scanner.nextLine();
-									if(publisher.matches(".*[a-z].*") || (publisher.contains(" ") && publisher.matches(".*[a-z].*"))) {
-										Book book = new Book(Integer.valueOf(id), "Book", title, Integer.valueOf(value), Integer.valueOf(pages), publisher);
+									if (publisher.matches(".*[a-z].*")
+											|| (publisher.contains(" ") && publisher.matches(".*[a-z].*"))) {
+										Book book = new Book(Integer.valueOf(id), "Book", title, Integer.valueOf(value),
+												Integer.valueOf(pages), publisher);
 										addProduct(book);
 										save(csvFile);
 										System.out.println("Successfully registered " + title + "!");
@@ -209,19 +215,21 @@ public class LibraryInventory {
 								length = scanner.nextLine();
 								try {
 									Integer.parseInt(length);
-								} catch(NumberFormatException e) {
+								} catch (NumberFormatException e) {
 									System.out.println("Error. The length can only contain numbers!");
 								}
-								if(length.matches(".*\\d.*") && !length.contains(" ")) {
+								if (length.matches(".*\\d.*") && !length.contains(" ")) {
 									System.out.println("Enter rating:");
 									rating = scanner.nextLine();
 									try {
 										Double.parseDouble(rating);
-										Movie movie = new Movie(Integer.valueOf(id), "Movie", title, Integer.valueOf(value), Integer.valueOf(length), Double.valueOf(rating));
+										Movie movie = new Movie(Integer.valueOf(id), "Movie", title,
+												Integer.valueOf(value), Integer.valueOf(length),
+												Double.valueOf(rating));
 										addProduct(movie);
 										save(csvFile);
 										System.out.println("Successfully registered " + title + "!");
-									} catch(NumberFormatException e) {
+									} catch (NumberFormatException e) {
 										System.out.println("Error. The rating can only contain numbers!");
 									}
 								}
