@@ -1,8 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 import org.apache.commons.csv.*;
@@ -127,7 +123,7 @@ public class LibraryStaff {
 		}
 
 		while (true) {
-			System.out.println("Enter your command here:" + "\n");
+			System.out.println("Enter your command here:");
 			System.out.print("> ");
 			String userInput = scanner.nextLine();
 			Command command = parseCommand(userInput);

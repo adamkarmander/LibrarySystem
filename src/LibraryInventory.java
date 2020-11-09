@@ -9,11 +9,6 @@ public class LibraryInventory {
 	Scanner scanner = new Scanner(System.in);
 
 	ArrayList<Product> inventory = new ArrayList<Product>();
-	// private List<Product> inventory;
-
-	// public LibraryInventory() {
-	// inventory = new ArrayList<Product>();
-	// }
 
 	public void save(File csvFile) {
 		try {
@@ -26,7 +21,7 @@ public class LibraryInventory {
 				String productName = p.getProductName();
 				int productValue = p.getProductValue();
 
-				if (p.getProductType() == "Book") {
+				if (p.getProductType().equals("Book")) {
 					Book b = (Book) p;
 					int pages = b.getPages();
 					String author = b.getAuthor();
@@ -35,13 +30,13 @@ public class LibraryInventory {
 						// Someone is borrowing the Book
 						String customerName = b.borrowingCustomer.getName();
 						String customerNumber = b.borrowingCustomer.getNumber();
-						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
-								+ "," + pages + "," + author + "," + customerName + "," + customerNumber);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue+ "," + pages + "," + author + "," + customerName + "," + customerNumber);
+						System.out.println("Printed product to CSV");
 					} else {
-						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
-								+ "," + pages + "," + author);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue+ "," + pages + "," + author);
+						System.out.println("Printed product to CSV");
 					}
-				} else if (p.getProductType() == "Movie") {
+				} else if (p.getProductType().equals("Movie")) {
 					Movie m = (Movie) p;
 					int length = m.getLength();
 					double rating = m.getRating();
@@ -50,11 +45,11 @@ public class LibraryInventory {
 						// Someone is borrowing the Movie
 						String customerName = m.borrowingCustomer.getName();
 						String customerNumber = m.borrowingCustomer.getNumber();
-						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
-								+ "," + length + "," + rating + "," + customerName + "," + customerNumber);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue+ "," + length + "," + rating + "," + customerName + "," + customerNumber);
+						System.out.println("Printed product to CSV");
 					} else {
-						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue
-								+ "," + length + "," + rating);
+						printWriter.println(articleNumber + "," + productType + "," + productName + "," + productValue+ "," + length + "," + rating);
+						System.out.println("Printed product to CSV");
 					}
 				}
 			}
@@ -127,12 +122,12 @@ public class LibraryInventory {
 		for (int i = 0; i < inventory.size(); i++) {
 			Product p = inventory.get(i);
 			if (String.valueOf(p.getArticleNumber()).equals(argument)) {
-				if (p.getProductType() == "Book") {
+				if (p.getProductType().equals("Book")) {
 					// Type casting so Book class methods can be used
 					Book b = (Book) p;
 					return "(" + b.getProductType() + ") " + b.getProductName() + ": Value " + b.getProductValue()
 							+ "kr, Pages " + b.getPages() + ", Author " + b.getAuthor();
-				} else if (p.getProductType() == "Movie") {
+				} else if (p.getProductType().equals("Movie")) {
 					// Type casting so Movie class methods can be used
 					Movie m = (Movie) p;
 					return "(" + m.getProductType() + ") " + m.getProductName() + ": Value " + m.getProductValue()
@@ -273,36 +268,4 @@ public class LibraryInventory {
 		}
 		return productsToPrintOut;
 	}
-	/*
-	 * public class LibraryInventory<E> implements AddProducts<E> {
-	 * 
-	 * private List<E> inventory; private String productPath; // Lagrar sökväg till
-	 * csv-filen
-	 * 
-	 * inventory=new LinkedList<E>();
-	 * 
-	 * private List<E> parseProducts(String productPath) throws
-	 * FileNotFoundException { this.productPath = productPath; inventory =
-	 * parseProducts(productPath); // Hur parsea produkterna ? FileReader reading =
-	 * new FileReader(productPath); Scanner sc = new Scanner(reading); sc.close(); }
-	 * 
-	 * private void writeProducts() { // Uppdaterar csv-filen med de nuvarande
-	 * produkterna try { PrintWriter printer = new PrintWriter(productPath);
-	 * 
-	 * for (E addProduct : inventory) { String csvRec = addProduct.bookCsvRec(); //
-	 * Hur få ut csvrecord från både book och movie printer.println(csvRec); //
-	 * Skriver ned csvrecord } printer.close(); } catch (FileNotFoundException e) {
-	 * e.printStackTrace(); } }
-	 * 
-	 * @Override public void addProduct(E Book) { inventory.add(Book);
-	 * writeProducts();
-	 * 
-	 * }
-	 * 
-	 * @Override public void addProduct2(E Movie) {
-	 * 
-	 * inventory.add(Movie); writeProducts();
-	 * 
-	 * }
-	 */
 }
