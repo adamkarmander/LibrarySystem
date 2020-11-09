@@ -131,21 +131,11 @@ public class LibraryStaff {
 			String userInput = scanner.nextLine();
 			Command command = parseCommand(userInput);
 			String argument = parseArgument(userInput);
-
+			
 			if (command == Command.LIST) {
 				System.out.println(lib.toString());
-			} else if (command == Command.CHECKOUT) {
-				lib.borrowProduct(argument, csvFile);
-
-			} else if (command == Command.CHECKIN) {
-				lib.returnProduct(argument, csvFile);
 			} else if (command == Command.REGISTER) {
 				lib.register(csvFile);
-			} else if (command == Command.DEREGISTER) {
-				System.out.println(lib.deregister(argument, csvFile));
-			} else if (command == Command.INFO) {
-				System.out.println(lib.getInfo(argument));
-
 			} else if (command == Command.QUIT) {
 				System.out.println("Goodbye!");
 				scanner.close();
@@ -153,6 +143,18 @@ public class LibraryStaff {
 			} else if (command == Command.UNKNOWN) {
 				System.out.println("Unknown command. Try again.");
 				continue;
+			} else if(!argument.equals("") && argument.matches(".*\\d.*")) {
+				if (command == Command.CHECKOUT) {
+					lib.borrowProduct(argument, csvFile);
+				} else if (command == Command.CHECKIN) {
+					lib.returnProduct(argument, csvFile);
+				} else if (command == Command.DEREGISTER) {
+					System.out.println(lib.deregister(argument, csvFile));
+				} else if (command == Command.INFO) {
+					System.out.println(lib.getInfo(argument));
+				}
+			} else {
+				System.out.println("Syntax error");
 			}
 		}
 	}
