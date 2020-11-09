@@ -158,10 +158,12 @@ public class LibraryInventory {
 	public void register(File csvFile) {
 		String type, title, id, value;
 		System.out.println("What are you registering? Book (b), Movie (m)");
+		System.out.print("> ");
 		type = scanner.nextLine().toLowerCase();
 
 		if (type.equals("b") || type.equals("m")) {
 			System.out.println("Enter product ID:");
+			System.out.print("> ");
 			id = scanner.nextLine();
 			try {
 				Integer.parseInt(id);
@@ -170,9 +172,11 @@ public class LibraryInventory {
 			}
 			if (id.matches(".*\\d.*") && !id.contains(" ")) {
 				System.out.println("Enter title:");
+				System.out.print("> ");
 				title = scanner.nextLine();
 				if (!title.equals("")) {
 					System.out.println("Enter value:");
+					System.out.print("> ");
 					value = scanner.nextLine();
 					try {
 						Integer.parseInt(value);
@@ -184,6 +188,7 @@ public class LibraryInventory {
 							if (type.equals("b")) {
 								String pages, publisher;
 								System.out.println("Enter number of pages:");
+								System.out.print("> ");
 								pages = scanner.nextLine();
 								try {
 									Integer.parseInt(pages);
@@ -192,6 +197,7 @@ public class LibraryInventory {
 								}
 								if (pages.matches(".*\\d.*") && !pages.contains(" ") && !pages.contains(",")) {
 									System.out.println("Enter publisher:");
+									System.out.print("> ");
 									publisher = scanner.nextLine();
 									if (publisher.matches(".*[a-z].*")
 											|| (publisher.contains(" ") && publisher.matches(".*[a-z].*"))) {
@@ -207,6 +213,7 @@ public class LibraryInventory {
 							} else if (type.equals("m")) {
 								String length, rating;
 								System.out.println("Enter length:");
+								System.out.print("> ");
 								length = scanner.nextLine();
 								try {
 									Integer.parseInt(length);
@@ -215,6 +222,7 @@ public class LibraryInventory {
 								}
 								if (length.matches(".*\\d.*") && !length.contains(" ")) {
 									System.out.println("Enter rating:");
+									System.out.print("> ");
 									rating = scanner.nextLine();
 									try {
 										Double.parseDouble(rating);

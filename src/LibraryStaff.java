@@ -127,6 +127,7 @@ public class LibraryStaff {
 		}
 
 		while (true) {
+			System.out.print("> ");
 			String userInput = scanner.nextLine();
 			Command command = parseCommand(userInput);
 			
