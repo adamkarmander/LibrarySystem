@@ -48,7 +48,7 @@ public class LibraryStaff {
 
 		Scanner scanner = new Scanner(System.in);
 		LibraryInventory lib = new LibraryInventory();
-		Collections.sort(lib, new SortProducts());
+		//Collections.sort(lib, new SortProducts());
 
 		String filePath = "library_csv.csv";
 		File csvFile = new File(filePath);

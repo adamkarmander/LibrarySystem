@@ -4,6 +4,7 @@
 //import java.io.PrintWriter;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 //import java.util.LinkedList;
@@ -68,6 +69,7 @@ public class LibraryInventory {
 
 	public void addProduct(Product product) {
 		inventory.add(product);
+		Collections.sort(inventory);
 	}
 
 	public void borrowProduct(String argument, File csvFile) {
