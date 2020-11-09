@@ -1,14 +1,9 @@
-
-//import java.io.FileNotFoundException;
-//import java.io.FileReader;
-//import java.io.PrintWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-//import java.util.LinkedList;
 
 public class LibraryInventory {
 	Scanner scanner = new Scanner(System.in);

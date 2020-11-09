@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Scanner;
 
 import org.apache.commons.csv.*;
@@ -130,7 +129,6 @@ public class LibraryStaff {
 		while (true) {
 			String userInput = scanner.nextLine();
 			Command command = parseCommand(userInput);
-			String argument = parseArgument(userInput);
 			
 			if (command == Command.LIST) {
 				System.out.println(lib.toString());
@@ -143,18 +141,21 @@ public class LibraryStaff {
 			} else if (command == Command.UNKNOWN) {
 				System.out.println("Unknown command. Try again.");
 				continue;
-			} else if(!argument.equals("") && argument.matches(".*\\d.*")) {
-				if (command == Command.CHECKOUT) {
-					lib.borrowProduct(argument, csvFile);
-				} else if (command == Command.CHECKIN) {
-					lib.returnProduct(argument, csvFile);
-				} else if (command == Command.DEREGISTER) {
-					System.out.println(lib.deregister(argument, csvFile));
-				} else if (command == Command.INFO) {
-					System.out.println(lib.getInfo(argument));
-				}
 			} else {
-				System.out.println("Syntax error");
+				String argument = parseArgument(userInput);
+				if(!argument.equals("") && argument.matches(".*\\d.*")) {
+					if (command == Command.CHECKOUT) {
+						lib.borrowProduct(argument, csvFile);
+					} else if (command == Command.CHECKIN) {
+						lib.returnProduct(argument, csvFile);
+					} else if (command == Command.DEREGISTER) {
+						System.out.println(lib.deregister(argument, csvFile));
+					} else if (command == Command.INFO) {
+						System.out.println(lib.getInfo(argument));
+					}
+				} else {
+					System.out.println("Syntax error");
+				}
 			}
 		}
 	}

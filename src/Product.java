@@ -90,9 +90,4 @@ public class Product implements Comparable<Product> {
 	 * 
 	 * }
 	 */
-
-	public static boolean Contains(Customer customer) {
-
-		return false;
-	}
 }
