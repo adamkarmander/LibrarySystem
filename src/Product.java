@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 public class Product implements Comparable<Product> {
 	protected int articleNumber;
 	protected String productType;
@@ -14,14 +12,15 @@ public class Product implements Comparable<Product> {
 		this.productValue = productValue;
 	}
 
-	public Product(int articleNumber, String productType, String productName, int productValue, Customer borrowingCustomer) {
+	public Product(int articleNumber, String productType, String productName, int productValue,
+			Customer borrowingCustomer) {
 		this.articleNumber = articleNumber;
 		this.productType = productType;
 		this.productName = productName;
 		this.productValue = productValue;
 		this.borrowingCustomer = borrowingCustomer;
 	}
-	
+
 	public Integer getArticleNumber() {
 		return articleNumber;
 	}
@@ -34,24 +33,12 @@ public class Product implements Comparable<Product> {
 		return productType;
 	}
 
-	public void setProductType(String newProductType) {
-		productType = newProductType;
-	}
-
 	public String getProductName() {
 		return productName;
 	}
 
-	public void setProductName(String newProductName) {
-		productName = newProductName;
-	}
-
 	public int getProductValue() {
 		return productValue;
-	}
-
-	public void setProductValue(int newProductValue) {
-		productValue = newProductValue;
 	}
 
 	@Override
@@ -64,32 +51,31 @@ public class Product implements Comparable<Product> {
 		return articleNumber + " (" + productType + "): " + productName + ".\n   lent by: "
 				+ borrowingCustomer.getName() + ", " + borrowingCustomer.getNumber() + "\n";
 	}
-	
+
 	@Override
 	public int compareTo(Product p) {
 		return this.getArticleNumber().compareTo(p.getArticleNumber());
 	}
 	/*
-		class SortProducts implements Comparator<Product> {
+	 * class SortProducts implements Comparator<Product> {
+	 * 
+	 * @Override public int compare(Product articleNumber1, Product articleNumber2)
+	 * { // articleNumber sorteras här i stigande ordning
+	 * 
+	 * return articleNumber1.articleNumber - articleNumber2.articleNumber;
+	 * 
+	 * }
+	 * 
+	 * /* Ha med denna text i Main-metoden innan arrayen printas ut?
+	 * 
+	 * Collections.sort(inventory, new SortProducts());
+	 * 
+	 */
 
-			@Override
-			public int compare(Product articleNumber1, Product articleNumber2) {
-				// articleNumber sorteras här i stigande ordning
-
-				return articleNumber1.articleNumber - articleNumber2.articleNumber;
-
-			}
-
-			/*
-			 * Ha med denna text i Main-metoden innan arrayen printas ut?
-			 * 
-			 * Collections.sort(inventory, new SortProducts());
-			 * 
-			 */
-
-		/*
-
-	}*/
+	/*
+	 * 
+	 * }
+	 */
 	/*
 	 * public String productCsvRec() { return String.format("%d, %s,%s",
 	 * articleNumber, productType, productName); } // Vilken regex för int?
