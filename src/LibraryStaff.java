@@ -47,7 +47,7 @@ public class LibraryStaff {
 
 		Scanner scanner = new Scanner(System.in);
 		LibraryInventory lib = new LibraryInventory();
-		//Collections.sort(lib, new SortProducts());
+		// Collections.sort(lib, new SortProducts());
 
 		String filePath = "library_csv.csv";
 		File csvFile = new File(filePath);
@@ -127,10 +127,11 @@ public class LibraryStaff {
 		}
 
 		while (true) {
+			System.out.println("Enter your command here:" + "\n");
 			System.out.print("> ");
 			String userInput = scanner.nextLine();
 			Command command = parseCommand(userInput);
-			
+
 			if (command == Command.LIST) {
 				System.out.println(lib.toString());
 			} else if (command == Command.REGISTER) {
@@ -144,7 +145,7 @@ public class LibraryStaff {
 				continue;
 			} else {
 				String argument = parseArgument(userInput);
-				if(!argument.equals("") && argument.matches(".*\\d.*")) {
+				if (!argument.equals("") && argument.matches(".*\\d.*")) {
 					if (command == Command.CHECKOUT) {
 						lib.borrowProduct(argument, csvFile);
 					} else if (command == Command.CHECKIN) {
@@ -155,7 +156,7 @@ public class LibraryStaff {
 						System.out.println(lib.getInfo(argument));
 					}
 				} else {
-					System.out.println("Syntax error");
+					System.out.println("Syntax error. You must also add an articleNumber");
 				}
 			}
 		}
